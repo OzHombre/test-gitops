@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      issues: write
 
     steps:
 
@@ -32,7 +33,6 @@ jobs:
   
       - name: Install Node dependencies
         run: npm install
-
 
       - name: Create label for short-lived feature branches
         run: gh label create "$LABEL_NAME" --description "$LABEL_DESC" --color "$LABEL_COLOR" --force
