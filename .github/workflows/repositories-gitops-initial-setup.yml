@@ -33,19 +33,6 @@ jobs:
       - name: Install Node dependencies
         run: npm install
 
-      - name: Update repo
-        run: .github/actions-scripts/repo-update.mjs
-        env:
-          GHA_TOKEN: ${{ secrets.GITOPS_PAT }}
-          REPO_OWNER: ${{ github.repository_owner	 }}
-          REPO_NAME: ${{ github.event.repository.name }}
-
-      - name: Update repo branch protection
-        run: .github/actions-scripts/repo-update-branch-protection.mjs
-        env:
-          GHA_TOKEN: ${{ secrets.GITOPS_PAT }}
-          REPO_OWNER: ${{ github.repository_owner	 }}
-          REPO_NAME: ${{ github.event.repository.name }}
 
       - name: Create label for short-lived feature branches
         run: gh label create "$LABEL_NAME" --description "$LABEL_DESC" --color "$LABEL_COLOR" --force
@@ -62,6 +49,20 @@ jobs:
           LABEL_NAME: 'dev-codespace'
           LABEL_DESC: 'Codespace for SLFB'
           LABEL_COLOR: 'bcf5db'
+          
+      - name: Update repo
+        run: .github/actions-scripts/repo-update.mjs
+        env:
+          GHA_TOKEN: ${{ secrets.GITOPS_PAT }}
+          REPO_OWNER: ${{ github.repository_owner	 }}
+          REPO_NAME: ${{ github.event.repository.name }}
+
+      - name: Update repo branch protection
+        run: .github/actions-scripts/repo-update-branch-protection.mjs
+        env:
+          GHA_TOKEN: ${{ secrets.GITOPS_PAT }}
+          REPO_OWNER: ${{ github.repository_owner	 }}
+          REPO_NAME: ${{ github.event.repository.name }}
   
       - name: GHA Summary
         run: echo "GitOps repo initial setup completed" >> $GITHUB_STEP_SUMMARY
